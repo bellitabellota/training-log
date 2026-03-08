@@ -5,11 +5,11 @@
   <%= planned_exercises_form.fields_for :planned_sets do |planned_set_form| %>
     <div class="p-px text-sm">
       Set&nbsp;<%= planned_set_form.object.set_number %>
-      <%= planned_set_form.hidden_field :set_number %>
+      <%= planned_set_form.hidden_field :set_number, disabled: true %>
     </div>
 
     <div class="p-px text-sm rounded-3xl bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500">
-      <%= planned_set_form.number_field :duration_seconds, class: "w-full text-center rounded-xl py-[1px] bg-white rounded-[calc(1.5rem-1px)] focus:outline-[1px]" %>
+      <%= planned_set_form.number_field :duration_seconds, class: "w-full text-center rounded-xl py-[1px] bg-white rounded-[calc(1.5rem-1px)] focus:outline-[1px]", disabled: true %>
     </div>
   <% end %>
 </div>
