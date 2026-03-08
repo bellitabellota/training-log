@@ -4,5 +4,8 @@
 
 import { application } from "./application"
 
+import FormExerciseTypeController from "./form_exercise_type_controller"
+application.register("form-exercise-type", FormExerciseTypeController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)

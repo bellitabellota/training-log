@@ -16,19 +16,19 @@
     <%= form.fields_for :planned_exercises do | planned_exercises_form |%>
       <%= planned_exercises_form.hidden_field :position %>
       <%= gradient_border_form_section do %>
-        <div class="px-2 py-1">
-          <%= planned_exercises_form.label :exercise_id, "Exercise" , class: "font-bold text-lg" %>
-          <%= gradient_input_wrapper do %>
-            <%= planned_exercises_form.select :exercise_id, @exercise_options %>
-          <% end %>
-        </div>
-
-        <div>
-          <%= render "form_table_weight_exercises", planned_exercises_form: planned_exercises_form %>
-        </div>
-
-        <div class="hidden">
-          <%= render "form_table_time_exercises", planned_exercises_form: planned_exercises_form %>
+        <div data-controller="form-exercise-type">
+          <div class="px-2 py-1">
+            <%= planned_exercises_form.label :exercise_id, "Exercise" , class: "font-bold text-lg" %>
+            <%= gradient_input_wrapper do %>
+              <%= planned_exercises_form.select :exercise_id, @exercise_options, { include_blank: "Select an exercise" }, data: { action: "change->form-exercise-type#toggle", form_exercise_type_target: "select" } %>
+            <% end %>
+          </div>
+          <div data-form-exercise-type-target="weight">
+            <%= render "form_table_weight_exercises", planned_exercises_form: planned_exercises_form %>
+          </div>
+          <div class="hidden" data-form-exercise-type-target="time">
+            <%= render "form_table_time_exercises", planned_exercises_form: planned_exercises_form %>
+          </div>
         </div>
       <% end %>
     <% end %>
