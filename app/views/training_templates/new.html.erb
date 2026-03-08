@@ -1,45 +1,37 @@
-<h1>TrainingTemplate#new</h1>
-
-<%= form_with model: @training_template do |form| %>
-  <% if form.object.errors.any? %>
-    <p class="error"><%= form.object.errors.full_messages.first %></p>
-  <% end %>
-
-  <div>
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
+<div class="max-w-sm my-6 mx-auto p-6 space-y-4 shadow-md bg-[oklch(98.5%_0_0)]">
+  <h1 class="text-center text-xl font-semibold">Create A New Training Template</h1>
   
-  <%= form.fields_for :planned_exercises do | planned_exercises_form |%>
-    <%= planned_exercises_form.hidden_field :position %>
-    <div class="border">
-      <%= planned_exercises_form.label :exercise_id, "Exercise" %>
-      <%= planned_exercises_form.select :exercise_id, @exercise_options %> 
-     
-      <%= planned_exercises_form.fields_for :planned_sets do |  planned_set_form |%> 
-        <div class="border">
-          <div>
-            <p>Set <%= planned_set_form.object.set_number %></p>
-
-            <%= planned_set_form.hidden_field :set_number %>
-          </div>
-          <div>
-            <%= planned_set_form.label :reps %>
-            <%= planned_set_form.number_field :reps, min: 0, step: 1 %>
-          </div>
-          <div>
-            <%= planned_set_form.label :weight %>
-            <%= planned_set_form.number_field :weight, in: 0.25..10000.00, step: 0.25 %>
-          </div>
-          <div>
-            <%= planned_set_form.label :duration_seconds, "Duration (seconds)" %>
-            <%= planned_set_form.number_field :duration_seconds %>
-          </div>
-        </div>
+  <%= form_with model: @training_template, class: "p-1 space-y-4" do |form| %>
+    <% if form.object.errors.any? %>
+      <p class="error"><%= form.object.errors.full_messages.first %></p>
+    <% end %>
+  
+    <div>
+      <%= form.label :name, "Template Name" %>
+      <%= gradient_input_wrapper do %>
+        <%= form.text_field :name, class: "px-2 focus:outline-[1px]" %>
       <% end %>
     </div>
+
+    <%= form.fields_for :planned_exercises do | planned_exercises_form |%>
+      <%= planned_exercises_form.hidden_field :position %>
+      <%= gradient_border_form_section do %>
+        <div class="px-2 py-1">
+          <%= planned_exercises_form.label :exercise_id, "Exercise" , class: "font-bold text-lg" %>
+          <%= gradient_input_wrapper do %>
+            <%= planned_exercises_form.select :exercise_id, @exercise_options %>
+          <% end %>
+        </div>
+
+        <div>
+          <%= render "form_table_weight_exercises", planned_exercises_form: planned_exercises_form %>
+        </div>
+
+        <div class="hidden">
+          <%= render "form_table_time_exercises", planned_exercises_form: planned_exercises_form %>
+        </div>
+      <% end %>
+    <% end %>
+    <%= gradient_form_submit(form) %>
   <% end %>
-<%= form.submit %>
-<% end %>
-
-
+</div>

@@ -26,7 +26,7 @@ class TrainingTemplatesController < ApplicationController
   private
 
   def get_exercise_options
-    @exercise_options = Exercise.all.map { |exercise| [ exercise.name, exercise.id ] }
+    @exercise_options = Exercise.all.map { |exercise| [ exercise.name, exercise.id, { data: { exercise_type: exercise.exercise_type } } ] }
   end
 
   def training_template_params
